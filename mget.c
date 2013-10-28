@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <curl/curl.h>
 
 static size_t get_size_struct(void *ptr, size_t size, size_t nmemb, void *data)
@@ -47,13 +48,17 @@ main(int argc, char **argv[])
 	}
 
 	// setup our vars
+	const char *outputfile;
 	char **url = argv[2];
-	int parts = strtol(argv[1], &argv[1], 10);
+	int parts = strtol(argv[1], &argv[1], 10); // base 10
 	double partSize = 0;
 	double segLocation = 0;
 	int still_running;
 	int i; // iterator
 
+	// get file name
+	outputfile = strrchr((const char *)url, '/') + 1;
+	
 	// get file size
 	double size = get_download_size(argv[2]);
 	partSize = size / parts;
@@ -75,8 +80,7 @@ main(int argc, char **argv[])
 	for (i=0; i<parts; i++) {
 		// setup our output filename
 		char filename[50];
-		sprintf(filename, "test.part.%0d", i);
-		fprintf(stderr, "Segment output file: %s\n", filename);
+		sprintf(filename, "%s.part.%0d", outputfile, i);
 		
 		// allocate curl handle for each segment
 		handles[i] = curl_easy_init();
@@ -164,7 +168,7 @@ main(int argc, char **argv[])
 					break;
 			}
 			
-			fprintf(stderr, "Segment %d has finished\n", index);
+			//fprintf(stderr, "Segment %d has finished\n", index);
 		}
 	}
 	
