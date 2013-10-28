@@ -39,19 +39,6 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
 	return written;
 }
 
-static void *get_part(void *range)
-{
-	CURL *curl;
-	fprintf(stderr, "Fetching range: %s\n", range);
-	FILE *file = fopen( "test" , "a");
-	curl = curl_easy_init();
-
-	curl_easy_perform(curl);
-	curl_easy_cleanup(curl);
-
-	return NULL;
-}
-
 main(int argc, char **argv[])
 {
 	if (argc != 3) {
@@ -62,15 +49,13 @@ main(int argc, char **argv[])
 	// setup our vars
 	char **url = argv[2];
 	int parts = strtol(argv[1], &argv[1], 10);
-	int remaining = 0;
 	double partSize = 0;
 	double segLocation = 0;
 	int still_running;
-	int i;
+	int i; // iterator
 
 	// get file size
 	double size = get_download_size(argv[2]);
-	remaining = size;
 	partSize = size / parts;
 
 	// output some file size/segement size info
@@ -183,6 +168,7 @@ main(int argc, char **argv[])
 		}
 	}
 	
+	// clean up our multi handle
 	curl_multi_cleanup(multi_handle);
 	
 	// free up the curl handles
