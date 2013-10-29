@@ -1,4 +1,4 @@
-<h1>mGet - the multithreadded curl downloader</h1>
+<h1>mGet - the multi curl downloader</h1>
 <h2>Requires</h2>
 <hr />
 <ul>
