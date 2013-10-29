@@ -204,6 +204,7 @@ main(int argc, char **argv[])
 		// set some curl options.
 		curl_easy_setopt(handles[i], CURLOPT_URL, url);
 		curl_easy_setopt(handles[i], CURLOPT_RANGE, range);
+		curl_easy_setopt(handles[i], CURLOPT_FOLLOWLOCATION, 1L);
 		curl_easy_setopt(handles[i], CURLOPT_WRITEFUNCTION, write_data);
 		curl_easy_setopt(handles[i], CURLOPT_NOPROGRESS, 0);
 		curl_easy_setopt(handles[i], CURLOPT_PROGRESSFUNCTION, progress_func);
