@@ -131,6 +131,7 @@ main(int argc, char **argv[])
 		return -1;
 	}
 	
+	// setup the start time for average download speed later when we have finished
 	time_t startTime;
 	startTime = time (NULL);
 	
@@ -153,8 +154,7 @@ main(int argc, char **argv[])
 	double segLocation = 0;
 	int still_running;
 	handles = parts;
-	int i; // iterator
-	
+	int i; 
 
 	// get file name
 	outputfile = strrchr((const char *)url, '/') + 1;
@@ -258,9 +258,9 @@ main(int argc, char **argv[])
 			case -1:
 				fprintf(stderr, "Could not select the error\n");
 				break;
-			case 0: /* timeout */
+			case 0: 
+				/* timeout */
 			default:
-				// action
 				curl_multi_perform(multi_handle, &still_running);
 				break;	
 		}
@@ -275,8 +275,6 @@ main(int argc, char **argv[])
 				if (found)
 					break;
 			}
-			
-			//fprintf(stderr, "Segment %d has finished\n", index);
 		}
 	}
 	
@@ -288,11 +286,12 @@ main(int argc, char **argv[])
 		curl_easy_cleanup(handles[i]);
 	}
 	
+	// close ncurses window
 	endwin();
 	
+	// send some output to the console for records sake.
 	time_t endTime;
 	endTime = time (NULL);
-	
 	printf("Downloaded %0.2f MB in %d seconds\n", partSize * parts / 1024 / 1024, endTime - startTime);
 	printf("%0.2f KB/s (average)\n", (partSize * parts / (endTime - startTime) / 1024));
 
