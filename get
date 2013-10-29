@@ -1,0 +1,5 @@
+#!/bin/bash
+NAME=`basename $1`
+./mget 5 $1
+cat ${NAME}.part.0 ${NAME}.part.1 ${NAME}.part.2 ${NAME}.part.3 ${NAME}.part.4 > $NAME
+rm -rf ${NAME}.part.*
