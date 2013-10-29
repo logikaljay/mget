@@ -1,1 +1,1 @@
-gcc -L/usr/local/lib -lcurl -I/usr/local/include -o mget mget.c
+gcc -L/usr/local/lib -lcurl -lm -I/usr/local/include -o mget mget.c
