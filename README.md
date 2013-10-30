@@ -13,4 +13,5 @@ Centos 6.4 x64.
 
 ## Run instructions
 ./get http://www.domain.com/largefile.zip
-This will fetch the file in 7 segments, join the file once it is done
+
+This will fetch the file in 5 segments, join the file once it is done
